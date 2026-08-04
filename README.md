@@ -11,6 +11,6 @@ This library is mainly developed to help indie game developers with getting thei
 - GOAP system.
 
 These three systems are combined into a single library so that you can expand your NPC's behaviours.
-For the full documentation [click here](rhythmrate.com/eddiedocs/).
+For the full documentation [click here](https://rhythmrate.com/eddiedocs/).
 
 > **Issues & Feedback:** If you encounter a bug, please open an issue on GitHub. Please note that pull requests and direct code contributions are not currently accepted.
