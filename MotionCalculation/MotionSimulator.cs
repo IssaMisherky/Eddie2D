@@ -56,10 +56,11 @@ public class MotionSimulator
 
         while (true)
         {
-            motion.asset.TimeUpdate(movementManager, motion, simulationDeltaTime);
             movementManager.FixedUpdate();
             _body.UpdateFrame(simulationDeltaTime);
+            motion.asset.TimeUpdate(movementManager, motion, simulationDeltaTime);
 
+            _eventsHandler.OnMotionLateUpdate();
 
             timer -= simulationDeltaTime;
 
@@ -95,8 +96,6 @@ public class MotionSimulator
 
         while (simulateMotion.MoveNext())
         {
-            _eventsHandler.OnMotionLateUpdate();
-
             var result = simulateMotion.Current;
 
             if (result != null)
@@ -122,8 +121,10 @@ public class MotionSimulator
         }
     }
 
-    public IEnumerator CalculateSimulations()
+    public IEnumerator CalculateSimulations(OnSimulationFinish onFinish)
     {
+        simulationDeltaTime = Time.fixedDeltaTime;
+
         MotionGraph[] graphs = new MotionGraph[_motionAssets.Length];
         motions = new MotionInstance[graphs.Length];
 
@@ -151,14 +152,15 @@ public class MotionSimulator
 
         this.motionGraphs = motionGraphs;
 
-        Simulated.Invoke(motionGraphs);
+        onFinish.Invoke(motionGraphs);
 
         _isSimulated = true;
     }
 
+    protected virtual void OnMotionSetup() { }
+    protected virtual void OnMotionLateUpdate() { }
 
     public delegate void OnSimulationFinish(MotionGraphs graphs);
-    public event OnSimulationFinish Simulated;
 
 
     public struct MotionGraphs

@@ -21,8 +21,8 @@ public class RealtimeBody : AbstractBody
     }
     public override Vector2 Position
     {
-        get { return rigidbody.transform.position; }
-        set { rigidbody.transform.position = value; }
+        get { return rigidbody.position; }
+        set { rigidbody.position = value; }
     }
 
     public override float Drag 
@@ -45,7 +45,7 @@ public class RealtimeBody : AbstractBody
 
     public override float GetDeltaTime()
     {
-        return Time.deltaTime;
+        return Time.fixedDeltaTime;
     }
 
     public override void addForce(Vector2 force, ForceMode2D forceMode = ForceMode2D.Force)
